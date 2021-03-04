@@ -94,6 +94,7 @@
         android:id="@+id/backSpaceImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:elevation="4dp"
         android:padding="24dp"
         android:src="@drawable/ic_baseline_backspace_24"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -250,7 +251,6 @@
         android:layout_marginBottom="32dp"
         android:ellipsize="start"
         android:gravity="center"
-        android:text="18+9-27+36-45+54-63+72-81"
         android:textColor="#212121"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -261,6 +261,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/barrierToStartOfButtons"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="18+9-27+36-45+54-63+72-81" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
