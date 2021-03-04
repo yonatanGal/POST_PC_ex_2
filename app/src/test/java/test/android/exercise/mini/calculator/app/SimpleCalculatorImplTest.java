@@ -1,4 +1,6 @@
-package android.exercise.mini.calculator.app;
+package test.android.exercise.mini.calculator.app;
+
+import android.exercise.mini.calculator.app.SimpleCalculatorImpl;
 
 import org.junit.Before;
 import org.junit.Test;
