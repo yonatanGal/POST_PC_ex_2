@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ContentDescription">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineScreenQ1"
@@ -77,19 +77,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageView
+    <View
         android:id="@+id/buttonBackSpace"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_baseline_backspace_24"
-        android:background="@color/white"
-        app:tint="@color/black"
+        android:background="@drawable/ripple_gray_on_white"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@id/backSpaceImage"
+        app:layout_constraintEnd_toEndOf="@id/backSpaceImage"
+        app:layout_constraintStart_toStartOf="@id/backSpaceImage"
+        app:layout_constraintTop_toTopOf="@id/backSpaceImage" />
+
+    <ImageView
+        android:id="@+id/backSpaceImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:padding="24dp"
+        android:src="@drawable/ic_baseline_backspace_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/buttonEquals"
-        app:layout_constraintTop_toTopOf="@id/guidelineScreenQ3" />
+        app:layout_constraintTop_toTopOf="@id/guidelineScreenQ3"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/button3"
