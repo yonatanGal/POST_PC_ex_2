@@ -34,12 +34,16 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
 
   @Override
   public void deleteLast() {
-    // todo: if the last user action was to add a digit, + or -, delete it
+    // todo: delete the last input (digit, plus or minus)
+    //  e.g.
+    //  if input was "12+3" and called `deleteLast()`, then delete the "3"
+    //  if input was "12+" and called `deleteLast()`, then delete the "+"
+    //  if no input was given, then there is nothing to do here
   }
 
   @Override
   public void clear() {
-    // todo: clear everything
+    // todo: clear everything (same as no-input was never given)
   }
 
   @Override
