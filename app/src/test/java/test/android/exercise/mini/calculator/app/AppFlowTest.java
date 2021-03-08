@@ -79,7 +79,7 @@ public class AppFlowTest {
 
   @Test
   public void flowTest2(){
-    // run clicks on "7+5d4="
+    // run clicks on "7+5<backspace>4="
     for (View button: Arrays.asList(
       button7, buttonPlus, button5, buttonBackspace, button4, buttonEquals
     )) {
@@ -89,5 +89,5 @@ public class AppFlowTest {
     assertEquals("11", textViewOutput.getText().toString());
   }
 
-  // TODO: add more flow tests
+  // TODO: add at last 10 more flow tests
 }
