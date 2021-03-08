@@ -29,7 +29,8 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
 
   @Override
   public void insertEquals() {
-    // todo: calculate the equation
+    // todo: calculate the equation. after calling `insertEquals()`, the output should be the result
+    //  e.g. given input "14+3", calling `insertEquals()`, and calling `output()`, output should be "17"
   }
 
   @Override
