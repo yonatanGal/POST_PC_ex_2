@@ -28,6 +28,18 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
     {
       throw new RuntimeException();
     }
+    if (output().equals("0") && digit == 0)
+    {
+      return;
+    }
+    if (this.curScreen.length() > 0 && digit == 0)
+    {
+      String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
+      if (lastDigit.equals(this.plus) || lastDigit.equals(this.minus))
+      {
+        return;
+      }
+    }
     this.curScreen = this.curScreen + digit;
   }
 
@@ -63,10 +75,38 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
     }
   }
 
+
+  /**
+   * a method to remove unnecessary operations from the end of the output or a minus from the
+   * beginning
+   */
+  private void parseCurScreen(String lastDigit, char firstDigit)
+  {
+    if (lastDigit.equals(this.plus) || lastDigit.equals(this.minus))
+    {
+      this.curScreen = this.curScreen.substring(0, this.curScreen.length() - 1);
+    }
+    if (firstDigit == '-')
+    {
+      this.curScreen = this.curScreen.substring(1);
+    }
+  }
+
+  /**
+   * a method to calculate the result when calling insertEquals
+   * @return the result as a String
+   */
   private String calculateResult()
   {
+    String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
+    char firstDigit = this.curScreen.charAt(0);
+    parseCurScreen(lastDigit, firstDigit);
     String[] resultList = this.curScreen.split("(?<=[-+])|(?=[-+])");
     int result = Integer.parseInt(resultList[0]);
+    if (firstDigit == '-')
+    {
+      result = -result;
+    }
     for (int i = 1; i < resultList.length; i += 2)
     {
       int num = Integer.parseInt(resultList[i + 1]);
@@ -91,15 +131,9 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
     }
     else
     {
-      String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
-      if (lastDigit.equals(this.plus) || lastDigit.equals(this.minus))
-      {
-        this.curScreen = this.curScreen.substring(0, this.curScreen.length() - 1);
-      }
       this.curScreen = calculateResult();
     }
   }
-
 
 
   @Override

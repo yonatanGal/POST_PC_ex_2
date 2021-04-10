@@ -7,7 +7,7 @@
 
 ## Your job:
 - Implement `SimpleCalculatorImpl.java`
-- add more unit tests to `SimpleCalculatorImpl.java`
+- add more unit tests to `SimpleCalculatorImplTest.java`
 - Implement `MainActivity.java`
 - add more unit tests to `MainActivityTest.java`
 - add more flow tests to `AppFlowTest.java`

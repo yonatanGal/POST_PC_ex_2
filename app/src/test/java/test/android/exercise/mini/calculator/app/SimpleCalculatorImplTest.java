@@ -12,27 +12,6 @@ import static org.junit.Assert.*;
 public class SimpleCalculatorImplTest {
 
   @Test
-  public void when_insertEquals_then_outputIsCorrect()
-  {
-    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
-    calculatorUnderTest.insertDigit(9);
-    calculatorUnderTest.insertDigit(8);
-    calculatorUnderTest.insertMinus();
-    calculatorUnderTest.insertDigit(3);
-    calculatorUnderTest.insertEquals();
-    assertEquals("95", calculatorUnderTest.output());
-
-    calculatorUnderTest.insertPlus();
-    calculatorUnderTest.insertEquals();
-    assertEquals("95", calculatorUnderTest.output());
-    calculatorUnderTest.insertPlus();
-    calculatorUnderTest.insertDigit(5);
-    assertEquals("95+5", calculatorUnderTest.output());
-    calculatorUnderTest.insertEquals();
-    assertEquals("100", calculatorUnderTest.output());
-  }
-
-  @Test
   public void when_noInputGiven_then_outputShouldBe0(){
     SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
     assertEquals("0", calculatorUnderTest.output());
@@ -122,19 +101,166 @@ public class SimpleCalculatorImplTest {
   public void when_savingStateFromFirstCalculator_should_loadStateCorrectlyFromSecondCalculator(){
     SimpleCalculatorImpl firstCalculator = new SimpleCalculatorImpl();
     SimpleCalculatorImpl secondCalculator = new SimpleCalculatorImpl();
-    // TODO: implement the test based on this method's name.
-    //  you can get inspiration from the test method `when_savingState_should_loadThatStateCorrectly()`
+
+    firstCalculator.insertDigit(9);
+    firstCalculator.insertPlus();
+    firstCalculator.insertDigit(8);
+    firstCalculator.insertEquals();
+    Serializable savedState = firstCalculator.saveState();
+
+    secondCalculator.loadState(savedState);
+    assertEquals("17", secondCalculator.output());
   }
 
-  // TODO:
-  //  the existing tests are not enough since they only test simple use-cases with small inputs.
-  //  write at least 10 methods to test correct behavior with complicated inputs or use-cases.
-  //  examples:
-  //  - given input "5+7-13<DeleteLast>25", expected output is "5+17-125"
-  //  - given input "9<Clear>12<Clear>8-7=", expected output is "1"
-  //  - given input "8-7=+4=-1=", expected output is "4"
-  //  - given input "999-888-222=-333", expected output is "-111-333"
-  //  - with 2 calculators, give them different inputs, then save state on first calculator and load the state into second calculator, make sure state loaded well
-  //  etc etc.
-  //  feel free to be creative in your tests!
+  @Test
+  public void complexUsage1()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.insertEquals();
+    assertEquals("95", calculatorUnderTest.output());
+
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertEquals();
+    assertEquals("95", calculatorUnderTest.output());
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertDigit(5);
+    assertEquals("95+5", calculatorUnderTest.output());
+    calculatorUnderTest.insertEquals();
+    assertEquals("100", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage2()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(0);
+    assertEquals("0", calculatorUnderTest.output());
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertEquals();
+    assertEquals("-1", calculatorUnderTest.output());
+
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(8);
+    assertEquals("-1-8", calculatorUnderTest.output());
+    calculatorUnderTest.insertEquals();
+    assertEquals("-9", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage3()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(5);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(1);
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.deleteLast();
+    assertEquals("5+8-1", calculatorUnderTest.output());
+    calculatorUnderTest.insertEquals();
+    assertEquals("12", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage4()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(5);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(1);
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.deleteLast();
+    assertEquals("5+8-1", calculatorUnderTest.output());
+    calculatorUnderTest.insertEquals();
+    assertEquals("12", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage5()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(5);
+    calculatorUnderTest.clear();
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.clear();
+    calculatorUnderTest.insertDigit(1);
+    assertEquals("1", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage6()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(2);
+    calculatorUnderTest.insertDigit(2);
+    calculatorUnderTest.insertDigit(2);
+    calculatorUnderTest.insertEquals();
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.insertDigit(3);
+    assertEquals("-111-333", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage7()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(5);
+    calculatorUnderTest.clear();
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.clear();
+    calculatorUnderTest.insertDigit(1);
+    assertEquals("1", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage8()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(1);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertMinus();
+    assertEquals("1+", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage9()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(1);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertMinus();
+    assertEquals("1+", calculatorUnderTest.output());
+  }
+
+  @Test
+  public void complexUsage10()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(1);
+    calculatorUnderTest.deleteLast();
+    assertEquals("0", calculatorUnderTest.output());
+  }
 }
