@@ -12,6 +12,27 @@ import static org.junit.Assert.*;
 public class SimpleCalculatorImplTest {
 
   @Test
+  public void when_insertEquals_then_outputIsCorrect()
+  {
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertDigit(8);
+    calculatorUnderTest.insertMinus();
+    calculatorUnderTest.insertDigit(3);
+    calculatorUnderTest.insertEquals();
+    assertEquals("95", calculatorUnderTest.output());
+
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertEquals();
+    assertEquals("95", calculatorUnderTest.output());
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertDigit(5);
+    assertEquals("95+5", calculatorUnderTest.output());
+    calculatorUnderTest.insertEquals();
+    assertEquals("100", calculatorUnderTest.output());
+  }
+
+  @Test
   public void when_noInputGiven_then_outputShouldBe0(){
     SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
     assertEquals("0", calculatorUnderTest.output());
@@ -29,7 +50,7 @@ public class SimpleCalculatorImplTest {
   public void when_inputIsMinus_then_outputShouldBeCorrect(){
     SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
     calculatorUnderTest.insertMinus();
-    String expected = "???"; // TODO: decide the expected output when having a single minus
+    String expected = "0-"; // TODO: decide the expected output when having a single minus
     assertEquals(expected, calculatorUnderTest.output());
   }
 
@@ -47,12 +68,33 @@ public class SimpleCalculatorImplTest {
 
   @Test
   public void when_callingDeleteLast_then_lastOutputShouldBeDeleted(){
-    // todo: implement test
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.insertMinus(); // does nothing
+    calculatorUnderTest.insertDigit(7);
+    calculatorUnderTest.deleteLast();
+    String expected = "9+";
+    assertEquals(expected, calculatorUnderTest.output());
+
+    calculatorUnderTest.deleteLast();
+    expected = "9";
+    assertEquals(expected, calculatorUnderTest.output());
+
+    calculatorUnderTest.deleteLast();
+    expected = "0";
+    assertEquals(expected, calculatorUnderTest.output());
   }
 
   @Test
   public void when_callingClear_then_outputShouldBeCleared(){
-    // todo: implement test
+    SimpleCalculatorImpl calculatorUnderTest = new SimpleCalculatorImpl();
+    calculatorUnderTest.insertDigit(9);
+    calculatorUnderTest.insertDigit(7);
+    calculatorUnderTest.insertPlus();
+    calculatorUnderTest.clear();
+    String expected = "0";
+    assertEquals(expected, calculatorUnderTest.output());
   }
 
   @Test

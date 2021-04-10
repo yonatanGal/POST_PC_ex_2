@@ -3,54 +3,123 @@ package android.exercise.mini.calculator.app;
 import java.io.Serializable;
 
 public class SimpleCalculatorImpl implements SimpleCalculator {
+  private String curScreen = "";
+  private final String plus = "+";
+  private final String minus = "-";
 
-  // todo: add fields as needed
 
   @Override
   public String output() {
     // todo: return output based on the current state
-    return "implement me please";
+    if (this.curScreen.length() == 0)
+    {
+      return "0";
+    }
+    else
+    {
+      return this.curScreen;
+    }
+
   }
 
   @Override
   public void insertDigit(int digit) {
-    // todo: insert a digit
+    if (digit < 0 || digit > 9)
+    {
+      throw new RuntimeException();
+    }
+    this.curScreen = this.curScreen + digit;
   }
 
   @Override
   public void insertPlus() {
-    // todo: insert a plus
+    if (this.curScreen.length() == 0)
+    {
+      this.curScreen = "0+";
+    }
+    else
+    {
+      String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
+      if (!lastDigit.equals(this.minus) && !lastDigit.equals(this.plus))
+      {
+        this.curScreen = this.curScreen + this.plus;
+      }
+    }
   }
 
   @Override
   public void insertMinus() {
-    // todo: insert a minus
+    if (this.curScreen.length() == 0)
+    {
+      this.curScreen = "0-";
+    }
+    else
+    {
+      String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
+      if (!lastDigit.equals(this.minus) && !lastDigit.equals(this.plus))
+      {
+        this.curScreen = this.curScreen + this.minus;
+      }
+    }
+  }
+
+  private String calculateResult()
+  {
+    String[] resultList = this.curScreen.split("(?<=[-+])|(?=[-+])");
+    int result = Integer.parseInt(resultList[0]);
+    for (int i = 1; i < resultList.length; i += 2)
+    {
+      int num = Integer.parseInt(resultList[i + 1]);
+      String operator = resultList[i];
+      if (operator.equals(this.plus))
+      {
+        result += num;
+      }
+      else
+      {
+        result -= num;
+      }
+    }
+    return String.valueOf(result);
   }
 
   @Override
   public void insertEquals() {
-    // todo: calculate the equation. after calling `insertEquals()`, the output should be the result
-    //  e.g. given input "14+3", calling `insertEquals()`, and calling `output()`, output should be "17"
+    if (this.curScreen.length() == 0)
+    {
+      this.curScreen = "0";
+    }
+    else
+    {
+      String lastDigit = this.curScreen.substring(this.curScreen.length() - 1);
+      if (lastDigit.equals(this.plus) || lastDigit.equals(this.minus))
+      {
+        this.curScreen = this.curScreen.substring(0, this.curScreen.length() - 1);
+      }
+      this.curScreen = calculateResult();
+    }
   }
+
+
 
   @Override
   public void deleteLast() {
-    // todo: delete the last input (digit, plus or minus)
-    //  e.g.
-    //  if input was "12+3" and called `deleteLast()`, then delete the "3"
-    //  if input was "12+" and called `deleteLast()`, then delete the "+"
-    //  if no input was given, then there is nothing to do here
+    if (this.curScreen.length() == 0)
+    {
+      return;
+    }
+    this.curScreen = this.curScreen.substring(0, this.curScreen.length() - 1);
   }
 
   @Override
   public void clear() {
-    // todo: clear everything (same as no-input was never given)
+    this.curScreen = "";
   }
 
   @Override
   public Serializable saveState() {
     CalculatorState state = new CalculatorState();
-    // todo: insert all data to the state, so in the future we can load from this state
+    state.settCurScreen(this.curScreen);
     return state;
   }
 
@@ -60,17 +129,21 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
       return; // ignore
     }
     CalculatorState casted = (CalculatorState) prevState;
-    // todo: use the CalculatorState to load
+    this.curScreen = casted.getCurScreen();
   }
 
   private static class CalculatorState implements Serializable {
-    /*
-    TODO: add fields to this class that will store the calculator state
-    all fields must only be from the types:
-    - primitives (e.g. int, boolean, etc)
-    - String
-    - ArrayList<> where the type is a primitive or a String
-    - HashMap<> where the types are primitives or a String
-     */
+    private String curScreen = "";
+
+    public void settCurScreen(String res)
+    {
+      this.curScreen = res;
+    }
+
+    public String getCurScreen()
+    {
+      return this.curScreen;
+    }
+
   }
 }
