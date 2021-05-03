@@ -10,7 +10,6 @@ public class SimpleCalculatorImpl implements SimpleCalculator {
 
   @Override
   public String output() {
-    // todo: return output based on the current state
     if (this.curScreen.length() == 0)
     {
       return "0";
