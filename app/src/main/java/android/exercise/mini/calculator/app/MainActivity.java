@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
   @VisibleForTesting
   public SimpleCalculator calculator;
+  private TextView screen;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     View button8 = findViewById(R.id.button8);
     View button9 = findViewById(R.id.button9);
 
-    TextView screen = findViewById(R.id.textViewCalculatorOutput);
+    screen = findViewById(R.id.textViewCalculatorOutput);
     screen.setText(calculator.output());
 
     clearButton.setOnClickListener(v ->
@@ -107,14 +108,13 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
-    outState.putSerializable("curScreen", calculator.output());
+    outState.putSerializable("curScreen", calculator.saveState());
   }
 
   @Override
   protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
     calculator.loadState(savedInstanceState.getSerializable("curScreen"));
-    TextView screen = findViewById(R.id.textViewCalculatorOutput);
     screen.setText(calculator.output());
   }
 }
